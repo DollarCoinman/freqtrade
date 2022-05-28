@@ -39,6 +39,13 @@ class RPCManager:
             from freqtrade.rpc.api_server import ApiServer
             apiserver = ApiServer(config)
             apiserver.add_rpc_handler(self._rpc)
+            if config.get('socket_server', {}).get('enabled', False):
+                logger.info('Enabling socketServer.api_server')
+                from freqtrade.rpc.socketcoin import SocketioFreqtradeServer
+                socketserver = SocketioFreqtradeServer(config, apiserver.app)
+                socketserver.add_rpc_handler(self._rpc)
+                self.registered_modules.append(socketserver)
+            apiserver.start_api()
             self.registered_modules.append(apiserver)
 
     def cleanup(self) -> None:

@@ -12,7 +12,6 @@ from freqtrade.exceptions import OperationalException
 from freqtrade.rpc.api_server.uvicorn_threaded import UvicornServer
 from freqtrade.rpc.rpc import RPC, RPCException, RPCHandler
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -71,7 +70,7 @@ class ApiServer(RPCHandler):
                            )
         self.configure_app(self.app, self._config)
 
-        self.start_api()
+
 
     def add_rpc_handler(self, rpc: RPC):
         """
